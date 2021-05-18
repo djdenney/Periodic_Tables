@@ -1,21 +1,13 @@
 import React, { useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
 import ErrorAlert from './layout/ErrorAlert'
-import { createReservation } from './utils/api'
+import { editReservation } from './utils/api'
 
-function NewReservation() {
+function EditReservation() {
     const history = useHistory()
-
-    const initialFormState = {
-        first_name: "",
-        last_name: "",
-        mobile_number: "",
-        reservation_date: "",
-        reservation_time: "",
-        people: 1,
-    }
-
-    const [formData, setFormData] = useState(initialFormState)
+    const location = useLocation()
+    const initialReservationState = location.state?.initialReservationState
+    const [formData, setFormData] = useState(initialReservationState)
     const [error, setError] = useState(null)
 
     function handleInput(e) {
@@ -44,17 +36,13 @@ function NewReservation() {
         e.preventDefault()
         try {
             const abortController = new AbortController()
-            const response = await createReservation({...formData}, abortController.signal)
-            history.push(`/dashboard?date=${formData.reservation_date}`)
+            const response = await editReservation({...formData}, abortController.signal)
+            history.goBack()
             return response
         } catch (error) {
             setError(error)
             console.error(error)
         }
-    }
-
-    function handleCancel() {
-        history.push("/")
     }
 
     function formatPhoneNumber(value) {
@@ -68,10 +56,16 @@ function NewReservation() {
         return `(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(3, 6)}-${phoneNumber.slice(6, 10)}`
     }
 
+    function handleCancel(e) {
+        e.preventDefault()
+        history.goBack()
+    }
+
+
     return (
         <div className="container">
             <form className="d-grid gap-2 mb-2" onSubmit={(e) => handleSubmit(e)}>
-                <h1>New Reservation</h1>
+                <h1>Edit Reservation</h1>
                 <ErrorAlert error={error} />
                 <div className="form-group">
                     <label>First Name:</label>
@@ -153,7 +147,7 @@ function NewReservation() {
                 <button className="btn btn-primary" type="submit">
                     Submit
                 </button>
-                <button className="btn btn-secondary" onClick={() => handleCancel()}>
+                <button className="btn btn-secondary" onClick={(e) => handleCancel(e)}>
                     Cancel
                 </button>
             </form>
@@ -161,4 +155,4 @@ function NewReservation() {
     )
 }
 
-export default NewReservation
+export default EditReservation

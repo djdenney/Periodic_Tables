@@ -13,12 +13,12 @@ import "./Layout.css";
  */
 function Layout() {
   return (
-    <div className="container-fluid">
+    <div className="container-fluid bg-dark text-light">
       <div className="row h-100">
         <div className="col-md-2 side-bar">
           <Menu />
         </div>
-        <div className="col">
+        <div className="col-md-8">
           <Routes />
         </div>
       </div>
