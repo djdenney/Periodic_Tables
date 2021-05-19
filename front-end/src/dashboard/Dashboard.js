@@ -168,7 +168,7 @@ function Dashboard({ today }) {
         return (
             <tr className="text-truncate" key={reservation.reservation_id}>
                 <th className="d-none d-md-table-cell" scope="row">{reservation.reservation_id}</th>
-                <td>{reservation.first_name} {reservation.last_name}</td>
+                <td><div className="d-none d-md-table-cell" >{reservation.first_name}</div> {reservation.last_name}</td>
                 <td className="d-none d-md-table-cell" >{reservation.mobile_number}</td>
                 <td>{simpleTimeFormat(reservation.reservation_time)}</td>
                 <td>{reservation.people}</td>
