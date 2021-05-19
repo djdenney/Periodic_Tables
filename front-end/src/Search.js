@@ -153,7 +153,7 @@ function Search() {
         </td>
         <td className="d-none d-md-table-cell">{reservation.mobile_number}</td>
         <td>{simpleTimeFormat(reservation.reservation_time)}</td>
-        <td>{reservation.people}</td>
+        <td className="d-none d-md-table-cell" >{reservation.people}</td>
         <td
           className="d-none d-md-table-cell"
           data-reservation-id-status={reservation.revervation_id}
@@ -205,7 +205,7 @@ function Search() {
                 Phone
               </th>
               <th scope="col">Time</th>
-              <th scope="col">Party</th>
+              <th className="d-none d-md-table-cell" scope="col">Party</th>
               <th className="d-none d-md-table-cell" scope="col">
                 Status
               </th>
