@@ -99,7 +99,7 @@ assign reservations to specific tables, and modify existing reservations.
 ### finish a table
 
 1. From "Dashboard", click "Finish" button corresponding to the table to finish
-![Finish Table](./Screenshot/FinishTable.png)
+![Finish Table](./Screenshots/FinishTable.png)
 2. Click "Ok" on the confirmation window
 ![Finish Table Confirmation](./Screenshots/FinishTableConfirm.png)
 
