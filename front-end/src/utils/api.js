@@ -89,11 +89,6 @@ export async function createReservation(data, signal) {
   return await fetchJson(url, options);
 }
 
-export async function updateReservation(reservation_id, signal) {
-  const url = new URL(`${API_BASE_URL}/reservations/${reservation_id}`);
-  return await fetchJson(url, { headers, signal });
-}
-
 export async function updateTable(table, signal) {
   const url = new URL(`${API_BASE_URL}/tables/${table.table_id}/seat`);
   const options = {
@@ -141,7 +136,6 @@ export async function updateReservationStatus(reservation, status, signal) {
 export async function searchPhoneNumber(phoneNumber, signal) {
   const url = new URL(`${API_BASE_URL}/reservations`);
   url.searchParams.append("mobile_number", phoneNumber.toString());
-  console.log(url);
   return await fetchJson(url, { headers, signal }, []);
 }
 

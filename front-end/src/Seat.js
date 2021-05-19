@@ -66,8 +66,6 @@ function Seat() {
 
   async function handleCancel(e) {
     e.preventDefault();
-    //const reservation = await findReservation(reservation_id)
-    //console.log(reservation.status)
     history.goBack();
   }
 

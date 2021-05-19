@@ -3,9 +3,7 @@ const asyncErrorBoundary = require("../errors/asyncErrorBoundary");
 
 async function list(req, res, next) {
   const query = req.query.date || req.query.mobile_number;
-  console.log(query);
   const data = await service.list(query);
-  console.log(data);
   res.json({ data });
 }
 
@@ -18,7 +16,6 @@ async function create(req, res, next) {
 
 async function edit(req, res, next) {
   const editedReservation = await service.edit(req.body.data);
-  console.log(editedReservation[0]);
   res.json({
     data: editedReservation[0],
   });
