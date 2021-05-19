@@ -161,7 +161,7 @@ function Search() {
           {reservation.status}
         </td>
         <td>{reservationStatus(reservation)}</td>
-        <td>{editReservation(reservation)}</td>
+        <td className="d-none d-md-table-cell" >{editReservation(reservation)}</td>
         <td>{cancelButton(reservation)}</td>
       </tr>
     );
@@ -210,7 +210,7 @@ function Search() {
                 Status
               </th>
               <th scope="col">Seat</th>
-              <th scope="col">Edit</th>
+              <th className="d-none d-md-table-cell" scope="col">Edit</th>
               <th scope="col">Cancel</th>
             </tr>
           </thead>

@@ -202,7 +202,7 @@ function Dashboard({ today }) {
           {reservation.status}
         </td>
         <td>{reservationStatus(reservation)}</td>
-        <td>{editReservation(reservation)}</td>
+        <td className="d-none d-md-table-cell" >{editReservation(reservation)}</td>
         <td>{cancelButton(reservation)}</td>
       </tr>
     );
@@ -210,10 +210,10 @@ function Dashboard({ today }) {
 
   const tableRows = tables.map((table) => (
     <tr className="text-truncate" key={table.table_id}>
-      <th scope="row">{table.table_id}</th>
+      <th className="d-none d-md-table-cell" scope="row">{table.table_id}</th>
       <td>{table.table_name}</td>
       <td>{table.capacity}</td>
-      <td data-table-id-status={table.table_id}>
+      <td className="d-none d-md-table-cell" data-table-id-status={table.table_id}>
         {tableStatus(table.reservation_id)}
       </td>
       <td>{showFinishButton(table, table.reservation_id)}</td>
@@ -275,7 +275,7 @@ function Dashboard({ today }) {
                   Status
                 </th>
                 <th scope="col">Seat</th>
-                <th scope="col">Edit</th>
+                <th className="d-none d-md-table-cell" scope="col">Edit</th>
                 <th scope="col">Cancel</th>
               </tr>
             </thead>
@@ -286,10 +286,10 @@ function Dashboard({ today }) {
           <table className="table table-striped table-dark">
             <thead>
               <tr>
-                <th scope="col">#</th>
+                <th className="d-none d-md-table-cell" scope="col">#</th>
                 <th scope="col">Name</th>
                 <th scope="col">Capacity</th>
-                <th scope="col">Occupied</th>
+                <th className="d-none d-md-table-cell" scope="col">Occupied</th>
                 <th scope="col">Finish</th>
               </tr>
             </thead>
