@@ -7,19 +7,31 @@
 require('dotenv').config();
 const path = require("path");
 
+function environmentSwitch(NODE_ENV) {
+    switch(NODE_ENV) {
+        case 'development': return DATABASE_URL_DEVELOPMENT
+        case 'test': return DATABASE_URL_TEST
+        case 'preview': return DATABASE_URL_PREVIEW
+        case 'production': return DATABASE_URL
+    }
+}
+
 const {
-  DATABASE_URL = "postgres://vkemkrsy:wNEL6xk56M7AyZP8Un8ERYXhMwFS3nDL@queenie.db.elephantsql.com:5432/vkemkrsy",
-  DATABASE_URL_DEVELOPMENT = "postgres://vkemkrsy:wNEL6xk56M7AyZP8Un8ERYXhMwFS3nDL@queenie.db.elephantsql.com:5432/vkemkrsy",
-  DATABASE_URL_TEST = "postgres://knulqjgu:mwNiAB3cZJHw1lA3uzYuCYJv3TV9Mt7k@queenie.db.elephantsql.com:5432/knulqjgu",
-  DATABASE_URL_PREVIEW = "postgres://aqleriza:fkzdl_KUWpVm1JeNpj7kgrsXd22XtysQ@queenie.db.elephantsql.com:5432/aqleriza",
-  DEBUG,
+    NODE_ENV = 'development',
+    DATABASE_URL,
+    DATABASE_URL_DEVELOPMENT,
+    DATABASE_URL_TEST,
+    DATABASE_URL_PREVIEW,
+    DEBUG,
 } = process.env;
+
+const URL = environmentSwitch(NODE_ENV)
 
 module.exports = {
   development: {
     client: "postgresql",
     pool: { min: 1, max: 5 },
-    connection: DATABASE_URL_DEVELOPMENT,
+    connection: URL,
     migrations: {
       directory: path.join(__dirname, "src", "db", "migrations"),
     },
