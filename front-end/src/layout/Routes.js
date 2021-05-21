@@ -18,43 +18,40 @@ import EditReservation from "../EditReservation";
  * @returns {JSX.Element}
  */
 function Routes() {
-  return (
-    <Switch>
-      <Route exact={true} path="/">
-        <Redirect to={"/dashboard"} />
-      </Route>
-      <Route exact={true} path="/reservations">
-        <Redirect to={"/dashboard"} />
-      </Route>
-      <Route exact={true} path="/reservations/new">
-        <NewReservation />
-      </Route>
-      <Route exact={true} path="/reservations/:date">
-        <Redirect to={"/dashboard/:date"} />
-      </Route>
-      <Route path="/dashboard">
-        <Dashboard today={today()} />
-      </Route>
-      <Route path="/dashboard/:date">
-        <Dashboard />
-      </Route>
-      <Route path="/tables/new">
-        <NewTable />
-      </Route>
-      <Route exact={true} path="/reservations/:reservation_id/seat">
-        <Seat />
-      </Route>
-      <Route exact={true} path="/search">
-        <Search />
-      </Route>
-      <Route exact={true} path="/reservations/:reservation_id/edit">
-        <EditReservation />
-      </Route>
-      <Route>
-        <NotFound />
-      </Route>
-    </Switch>
-  );
+    return (
+        <Switch>
+            <Route exact={true} path="/">
+                <Redirect to={"/dashboard"} />
+            </Route>
+            <Route exact={true} path="/reservations">
+                <Redirect to={"/dashboard"} />
+            </Route>
+            <Route exact={true} path="/reservations/new">
+                <NewReservation />
+            </Route>
+            <Route path="/dashboard">
+                <Dashboard today={today()} />
+            </Route>
+            <Route path="/dashboard/:date">
+                <Dashboard />
+            </Route>
+            <Route path="/tables/new">
+                <NewTable />
+            </Route>
+            <Route exact={true} path="/reservations/:reservation_id/seat">
+                <Seat />
+            </Route>
+            <Route exact={true} path="/search">
+                <Search />
+            </Route>
+            <Route exact={true} path="/reservations/:reservation_id/edit">
+                <EditReservation />
+            </Route>
+            <Route>
+                <NotFound />
+            </Route>
+        </Switch>
+    );
 }
 
 export default Routes;
