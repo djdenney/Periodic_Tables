@@ -21,10 +21,34 @@ function EditReservation() {
                     reservation_id, 
                     abortController.signal
                 )
-                setFormData({
-                    ...response,
-                    reservation_date: date
-                })
+                /*setFormData date from 'response' comes through as SQL formatted date.
+                setFormData date from {...response, reservation_date: date} comes from location.state.
+                when using location.state to retrieve the date from the link click found
+                in the editReservation() function on the Dashboard component, the app works,
+                but only if this module (EditReservation.js) is accessed by clicking the link.
+                if it is not accessed via link-click, but manually via the URL, the date is not
+                sent from the state set by the link on the Dashboard, so when frontend test 08
+                attempts to access it (by manually entering url '/reservations/:reservation_id/edit')
+                the date does not populate.
+
+                On the other hand, if I just use 'response', the date does not populate because
+                the form field is a 'date' type and the received information for 'formData.reservation_date'
+                is in the SQL format, which cannot be read as a 'date' type in JSX.
+
+                it should also be noted that using date passed from location.state for setFormData causes
+                the vercel build to fail, specifically because when it builds the pages for deployment, it
+                attempts to access the page by its route, meaning that location.state.date is never passed
+                so when 'date' is used in this useEffect, it throws the following build error: 
+
+                ***Line 38:8:  React Hook useEffect has a missing dependency: 'date'. 
+                Either include it or remove the dependency array  react-hooks/exhaustive-deps***
+
+                */
+                setFormData(response)
+                // setFormData({
+                //     ...response,
+                //     reservation_date: date
+                // })
                 
             } catch (error) {
                 setError(error)
