@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useHistory, useParams, useLocation } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import ErrorAlert from "./layout/ErrorAlert";
 import { editReservation, findReservation } from "./utils/api";
 
 function EditReservation() {
     const history = useHistory();
-    //const location = useLocation()
-    //const date = location.state.date
     const { reservation_id } = useParams();
     const [formData, setFormData] = useState();
     const [error, setError] = useState(null);
