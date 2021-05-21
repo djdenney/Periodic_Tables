@@ -15,22 +15,22 @@ function Search() {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        const abortController = new AbortController()
-        async function loadSearch () {
+        const abortController = new AbortController();
+        async function loadSearch() {
             try {
-                setError(null)
-                const response = await listTables(abortController.signal)
-                setTables(response)
+                setError(null);
+                const response = await listTables(abortController.signal);
+                setTables(response);
             } catch (error) {
-                setError(error)
-                console.error(error)
+                setError(error);
+                console.error(error);
             }
         }
-        loadSearch()
+        loadSearch();
         return () => {
-            abortController.abort()
-        }
-    })
+            abortController.abort();
+        };
+    }, []);
 
     function handleChange(e) {
         const value = e.target.value;
@@ -40,7 +40,7 @@ function Search() {
 
     async function handleSubmit(e) {
         e.preventDefault();
-        const abortController = new AbortController()
+        const abortController = new AbortController();
         try {
             const response = await searchPhoneNumber(
                 phoneNumber,
@@ -85,7 +85,7 @@ function Search() {
                         },
                     }}
                     type="button"
-                    className="btn btn-light"
+                    className="btn btn-light btn-sm"
                 >
                     Seat
                 </Link>
@@ -105,7 +105,7 @@ function Search() {
                         },
                     }}
                     type="button"
-                    className="btn btn-light"
+                    className="btn btn-light btn-sm"
                 >
                     Edit
                 </Link>
@@ -118,7 +118,7 @@ function Search() {
         if (reservation.status === "booked") {
             return (
                 <button
-                    className="btn btn-danger"
+                    className="btn btn-danger btn-sm"
                     onClick={() => cancelReservation(reservation)}
                 >
                     Cancel
@@ -152,15 +152,16 @@ function Search() {
 
     const reservationRows = reservations.map((reservation) => {
         return (
-            <tr className="text-truncate" key={reservation.reservation_id}>
+            <tr
+                className="text-truncate"
+                style={{ height: "48px" }}
+                key={reservation.reservation_id}
+            >
                 <th className="d-none d-md-table-cell" scope="row">
                     {reservation.reservation_id}
                 </th>
                 <td>
-                    <div className="d-none d-md-table-cell">
-                        {reservation.first_name}
-                    </div>{" "}
-                    {reservation.last_name}
+                    {reservation.first_name} {reservation.last_name}
                 </td>
                 <td className="d-none d-md-table-cell">
                     {reservation.mobile_number}
@@ -212,7 +213,7 @@ function Search() {
             {reservations.length <= 0 ? (
                 <h4>No reservations found</h4>
             ) : (
-                <table className="table table-striped table-dark">
+                <table className="table table-striped table-dark align-middle">
                     <thead>
                         <tr>
                             <th className="d-none d-md-table-cell" scope="col">

@@ -12,47 +12,29 @@ function EditReservation() {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        const abortController = new AbortController()
+        const abortController = new AbortController();
         async function loadEditReservation() {
             try {
-                setError(null)
+                setError(null);
                 const response = await findReservation(
-                    reservation_id, 
+                    reservation_id,
                     abortController.signal
-                )
-                /*setFormData date from 'response' comes through as SQL formatted date.
-                setFormData date from {...response, reservation_date: date} comes from location.state.
-                when using location.state to retrieve the date from the link click found
-                in the editReservation() function on the Dashboard component, the app works,
-                but only if this module (EditReservation.js) is accessed by clicking the link.
-                if it is not accessed via link-click, but manually via the URL, the date is not
-                sent from the state set by the link on the Dashboard, so when frontend test 08
-                attempts to access it (by manually entering url '/reservations/:reservation_id/edit')
-                the date does not populate.
-
-                On the other hand, if I just use 'response', the date does not populate because
-                the form field is a 'date' type and the received information for 'formData.reservation_date'
-                is in the SQL format, which cannot be read as a 'date' type in JSX. Attempting to use a
-                function to put the value of the date field in the correct format causes a problem
-                for the handleChange function, because it attempts to update based on the value of
-                the field.
-                */
-                setFormData(response)
-                // setFormData({
-                //     ...response,
-                //     reservation_date: date
-                // })
-                
+                );
+                const thisDate = response.reservation_date.split("T")[0];
+                setFormData({
+                    ...response,
+                    reservation_date: thisDate,
+                });
             } catch (error) {
-                setError(error)
-                console.error(error)
+                setError(error);
+                console.error(error);
             }
         }
-        loadEditReservation()
+        loadEditReservation();
         return () => {
-            abortController.abort()
-        }
-    }, [reservation_id])
+            abortController.abort();
+        };
+    }, [reservation_id]);
 
     function handleChange(e) {
         let value = e.target.value;
@@ -112,102 +94,106 @@ function EditReservation() {
     }
 
     if (formData) {
-        return (
-            <div className="container">
-                <form
-                    className="d-grid gap-2 mb-2"
-                    onSubmit={(e) => handleSubmit(e)}
-                >
-                    <h1>Edit Reservation</h1>
-                    <ErrorAlert error={error} />
-                    <div className="form-group">
-                        <label>First Name:</label>
-                        <input
-                            id="first_name"
-                            name="first_name"
-                            className="form-control"
-                            onChange={(e) => handleChange(e)}
-                            type="text"
-                            value={formData.first_name}
-                            required
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label>Last Name:</label>
-                        <input
-                            id="last_name"
-                            name="last_name"
-                            className="form-control"
-                            onChange={(e) => handleChange(e)}
-                            type="text"
-                            value={formData.last_name}
-                            required
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label>Mobile Number:</label>
-                        <input
-                            id="mobile_number"
-                            name="mobile_number"
-                            className="form-control"
-                            onChange={(e) => handleChange(e)}
-                            type="text"
-                            maxLength="14"
-                            size="14"
-                            value={formData.mobile_number}
-                            required
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label>Date of Reservation:</label>
-                        <input
-                            id="reservation_date"
-                            name="reservation_date"
-                            className="form-control"
-                            onChange={(e) => handleChange(e)}
-                            type="date"
-                            value={formData.reservation_date}
-                            required
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label>Time of Reservation:</label>
-                        <input
-                            id="reservation_time"
-                            name="reservation_time"
-                            className="form-control"
-                            onChange={(e) => handleChange(e)}
-                            type="time"
-                            value={formData.reservation_time}
-                            step="300"
-                            required
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label>People:</label>
-                        <input
-                            id="people"
-                            name="people"
-                            className="form-control"
-                            onChange={(e) => handleChange(e)}
-                            type="number"
-                            value={formData.people}
-                            required
-                        />
-                    </div>
-                    <button className="btn btn-primary" type="submit">
-                        Submit
-                    </button>
-                    <button
-                        data-reservation-id-cancel={formData.reservation_id}
-                        className="btn btn-secondary"
-                        onClick={(e) => handleCancel(e)}
+        if (formData.reservation_date) {
+            return (
+                <div className="container">
+                    <form
+                        className="d-grid gap-2 mb-2"
+                        onSubmit={(e) => handleSubmit(e)}
                     >
-                        Cancel
-                    </button>
-                </form>
-            </div>
-        );
+                        <h1>Edit Reservation</h1>
+                        <ErrorAlert error={error} />
+                        <div className="form-group">
+                            <label>First Name:</label>
+                            <input
+                                id="first_name"
+                                name="first_name"
+                                className="form-control"
+                                onChange={(e) => handleChange(e)}
+                                type="text"
+                                value={formData.first_name}
+                                required
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label>Last Name:</label>
+                            <input
+                                id="last_name"
+                                name="last_name"
+                                className="form-control"
+                                onChange={(e) => handleChange(e)}
+                                type="text"
+                                value={formData.last_name}
+                                required
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label>Mobile Number:</label>
+                            <input
+                                id="mobile_number"
+                                name="mobile_number"
+                                className="form-control"
+                                onChange={(e) => handleChange(e)}
+                                type="text"
+                                maxLength="14"
+                                size="14"
+                                value={formData.mobile_number}
+                                required
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label>Date of Reservation:</label>
+                            <input
+                                id="reservation_date"
+                                name="reservation_date"
+                                className="form-control"
+                                onChange={(e) => handleChange(e)}
+                                type="date"
+                                value={formData.reservation_date}
+                                required
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label>Time of Reservation:</label>
+                            <input
+                                id="reservation_time"
+                                name="reservation_time"
+                                className="form-control"
+                                onChange={(e) => handleChange(e)}
+                                type="time"
+                                value={formData.reservation_time}
+                                step="300"
+                                required
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label>People:</label>
+                            <input
+                                id="people"
+                                name="people"
+                                className="form-control"
+                                onChange={(e) => handleChange(e)}
+                                type="number"
+                                value={formData.people}
+                                required
+                            />
+                        </div>
+                        <button className="btn btn-primary" type="submit">
+                            Submit
+                        </button>
+                        <button
+                            data-reservation-id-cancel={formData.reservation_id}
+                            className="btn btn-secondary"
+                            onClick={(e) => handleCancel(e)}
+                        >
+                            Cancel
+                        </button>
+                    </form>
+                </div>
+            );
+        } else {
+            return null;
+        }
     } else {
         return null;
     }

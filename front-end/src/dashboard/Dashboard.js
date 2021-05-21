@@ -8,12 +8,6 @@ import {
 } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
 
-/**
- * Defines the dashboard page.
- * @param date
- *  the date for which the user wants to view reservations.
- * @returns {JSX.Element}
- */
 function Dashboard({ today }) {
     const history = useHistory();
     const query = new URLSearchParams(useLocation().search);
@@ -21,39 +15,36 @@ function Dashboard({ today }) {
     const [selectedDate, setSelectedDate] = useState(date || today);
     const [reservations, setReservations] = useState([]);
     const [tables, setTables] = useState([]);
-    const [reservationsError, setReservationsError] = useState(null);
-    const [tablesError, setTablesError] = useState(null);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
-        const abortController = new AbortController()
+        const abortController = new AbortController();
         async function loadDashboard() {
             try {
-                setReservationsError(null)
+                setError(null);
                 const response = await listReservations(
-                    { selectedDate }, 
+                    { selectedDate },
                     abortController.signal
-                )
-                setReservations(response)
+                );
+                setReservations(response);
             } catch (error) {
-                setReservationsError(error)
-                console.error(error)
+                setError(error);
+                console.error(error);
             }
             try {
-                setTablesError(null)
-                const response = await listTables(
-                    abortController.signal
-                )
-                setTables(response)
+                setError(null);
+                const response = await listTables(abortController.signal);
+                setTables(response);
             } catch (error) {
-                setTablesError(error)
-                console.error(error)
+                setError(error);
+                console.error(error);
             }
         }
-        loadDashboard()
+        loadDashboard();
         return () => {
-            abortController.abort()
-        }
-    }, [selectedDate])
+            abortController.abort();
+        };
+    }, [selectedDate]);
 
     function handleChange(e) {
         let value = e.target.value;
@@ -107,7 +98,7 @@ function Dashboard({ today }) {
                 return response;
             }
         } catch (error) {
-            setTablesError(error);
+            setError(error);
             console.error(error);
         }
     }
@@ -116,7 +107,7 @@ function Dashboard({ today }) {
         if (reservationId) {
             return (
                 <button
-                    className="btn btn-light"
+                    className="btn btn-light btn-sm"
                     data-table-id-finish={table.table_id}
                     onClick={() => finish(table)}
                 >
@@ -138,7 +129,7 @@ function Dashboard({ today }) {
                         },
                     }}
                     type="button"
-                    className="btn btn-light"
+                    className="btn btn-light btn-sm"
                 >
                     Seat
                 </Link>
@@ -158,7 +149,7 @@ function Dashboard({ today }) {
                         },
                     }}
                     type="button"
-                    className="btn btn-light"
+                    className="btn btn-light btn-sm"
                 >
                     Edit
                 </Link>
@@ -172,7 +163,7 @@ function Dashboard({ today }) {
             return (
                 <td data-reservation-id-cancel={reservation.reservation_id}>
                     <button
-                        className="btn btn-danger"
+                        className="btn btn-danger btn-sm"
                         onClick={() => cancelReservation(reservation)}
                     >
                         Cancel
@@ -200,22 +191,23 @@ function Dashboard({ today }) {
                 return response;
             }
         } catch (error) {
-            setTablesError(error);
+            setError(error);
             console.error(error);
         }
     }
 
     const reservationRows = reservations.map((reservation) => {
         return (
-            <tr className="text-truncate" key={reservation.reservation_id}>
+            <tr
+                className="text-truncate"
+                style={{ height: "48px" }}
+                key={reservation.reservation_id}
+            >
                 <th className="d-none d-md-table-cell" scope="row">
                     {reservation.reservation_id}
                 </th>
                 <td>
-                    <div className="d-none d-md-table-cell">
-                        {reservation.first_name}
-                    </div>{" "}
-                    {reservation.last_name}
+                    {reservation.first_name} {reservation.last_name}
                 </td>
                 <td className="d-none d-md-table-cell">
                     {reservation.mobile_number}
@@ -238,7 +230,11 @@ function Dashboard({ today }) {
     });
 
     const tableRows = tables.map((table) => (
-        <tr className="text-truncate" key={table.table_id}>
+        <tr
+            className="text-truncate"
+            style={{ height: "48px" }}
+            key={table.table_id}
+        >
             <th className="d-none d-md-table-cell" scope="row">
                 {table.table_id}
             </th>
@@ -256,16 +252,20 @@ function Dashboard({ today }) {
             <div className="container">
                 <div className="d-grid gap-2 mb-2">
                     <h1>Dashboard</h1>
-                    <h4>Reservations for date</h4>
-                    <input
-                        id="date"
-                        name="date"
-                        className="form-control"
-                        type="date"
-                        value={selectedDate}
-                        onChange={(e) => handleChange(e)}
-                        required
-                    />
+                    <ErrorAlert error={error} />
+                    <h4>Reservations</h4>
+                    <div className="form-group">
+                        <label>Date:</label>
+                        <input
+                            id="date"
+                            name="date"
+                            className="form-control"
+                            type="date"
+                            value={selectedDate}
+                            onChange={(e) => handleChange(e)}
+                            required
+                        />
+                    </div>
                     <div className="btn-group">
                         <button
                             type="button"
@@ -289,8 +289,7 @@ function Dashboard({ today }) {
                             Next
                         </button>
                     </div>
-                    <ErrorAlert error={reservationsError} />
-                    <table className="table table-striped table-dark">
+                    <table className="table table-striped table-dark align-middle">
                         <thead>
                             <tr>
                                 <th
@@ -332,8 +331,7 @@ function Dashboard({ today }) {
                         <tbody>{reservationRows}</tbody>
                     </table>
                     <h4>Tables</h4>
-                    <ErrorAlert error={tablesError} />
-                    <table className="table table-striped table-dark">
+                    <table className="table table-striped table-dark align-middle">
                         <thead>
                             <tr>
                                 <th

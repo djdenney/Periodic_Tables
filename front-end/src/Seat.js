@@ -16,22 +16,22 @@ function Seat() {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        const abortController = new AbortController()
+        const abortController = new AbortController();
         async function loadSeat() {
             try {
-                setError(null)
-                const response = await listTables(abortController.signal)
-                setTables(response)
+                setError(null);
+                const response = await listTables(abortController.signal);
+                setTables(response);
             } catch (error) {
-                setError(error)
-                console.error(error)
+                setError(error);
+                console.error(error);
             }
         }
-        loadSeat()
+        loadSeat();
         return () => {
-            abortController.abort()
-        }
-    }, [])
+            abortController.abort();
+        };
+    }, []);
 
     const tableOptions = tables.map((table) => {
         if (!table.reservation_id) {
