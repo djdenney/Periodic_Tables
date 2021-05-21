@@ -2,12 +2,11 @@ import React, { useState, useEffect } from "react";
 import { useHistory, useParams, useLocation } from "react-router-dom";
 import ErrorAlert from "./layout/ErrorAlert";
 import { editReservation, findReservation } from "./utils/api";
-import { asDateString } from "./utils/date-time";
 
 function EditReservation() {
     const history = useHistory();
-    const location = useLocation()
-    const date = location.state.date
+    //const location = useLocation()
+    //const date = location.state.date
     const { reservation_id } = useParams();
     const [formData, setFormData] = useState();
     const [error, setError] = useState(null);
@@ -33,16 +32,10 @@ function EditReservation() {
 
                 On the other hand, if I just use 'response', the date does not populate because
                 the form field is a 'date' type and the received information for 'formData.reservation_date'
-                is in the SQL format, which cannot be read as a 'date' type in JSX.
-
-                it should also be noted that using date passed from location.state for setFormData causes
-                the vercel build to fail, specifically because when it builds the pages for deployment, it
-                attempts to access the page by its route, meaning that location.state.date is never passed
-                so when 'date' is used in this useEffect, it throws the following build error: 
-
-                ***Line 38:8:  React Hook useEffect has a missing dependency: 'date'. 
-                Either include it or remove the dependency array  react-hooks/exhaustive-deps***
-
+                is in the SQL format, which cannot be read as a 'date' type in JSX. Attempting to use a
+                function to put the value of the date field in the correct format causes a problem
+                for the handleChange function, because it attempts to update based on the value of
+                the field.
                 */
                 setFormData(response)
                 // setFormData({
