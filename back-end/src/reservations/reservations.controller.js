@@ -190,7 +190,6 @@ function validateReservationTime(reservationTime, reservationDate) {
     reservationDate.setHours(reservationTimeParsedString.substring(0, 2));
     reservationDate.setMinutes(reservationTimeParsedString.substring(2, 4));
     const now = new Date();
-    console.log(now)
     const openTime = new Date(reservationDate);
     openTime.setHours(10);
     openTime.setMinutes(30);
