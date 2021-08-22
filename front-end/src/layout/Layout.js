@@ -1,6 +1,7 @@
 import React from "react";
 import Menu from "./Menu";
 import Routes from "./Routes";
+import Footer from "./Footer";
 
 import "./Layout.css";
 
@@ -13,9 +14,10 @@ import "./Layout.css";
  */
 function Layout() {
     return (
-        <div className="container-fluid bg-dark text-light" style={{"height": "100vh"}}>
+        <div className="container-fluid bg-dark text-light" style={{"min-height": "100vh", "max-height": "100%"}}>
             <Menu />
             <Routes />
+            <Footer />
         </div>
     );
 }
