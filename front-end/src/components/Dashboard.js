@@ -115,7 +115,15 @@ function Dashboard({ today }) {
                 </button>
             );
         }
-        return null;
+        return (
+            <button
+                className="btn btn-light btn-sm"
+                data-table-id-finish={table.table_id}
+                disabled
+            >
+                Empty
+            </button>
+        );
     }
 
     function reservationStatus(reservation) {
@@ -240,7 +248,7 @@ function Dashboard({ today }) {
             </th>
             <td>{table.table_name}</td>
             <td>{table.capacity}</td>
-            <td data-table-id-status={table.table_id}>
+            <td className="d-none d-md-table-cell" data-table-id-status={table.table_id}>
                 {tableStatus(table.reservation_id)}
             </td>
             <td>{showFinishButton(table, table.reservation_id)}</td>

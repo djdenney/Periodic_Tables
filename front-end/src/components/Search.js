@@ -4,8 +4,8 @@ import {
     listTables,
     searchPhoneNumber,
     updateReservationStatus,
-} from "./utils/api";
-import ErrorAlert from "./layout/ErrorAlert";
+} from "../utils/api";
+import ErrorAlert from "../layout/ErrorAlert";
 
 function Search() {
     const history = useHistory();

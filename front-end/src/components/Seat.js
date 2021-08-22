@@ -5,8 +5,8 @@ import {
     findReservation,
     updateTable,
     listTables,
-} from "./utils/api";
-import ErrorAlert from "./layout/ErrorAlert";
+} from "../utils/api";
+import ErrorAlert from "../layout/ErrorAlert";
 
 function Seat() {
     const history = useHistory();
